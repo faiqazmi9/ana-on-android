@@ -6,6 +6,7 @@
     <color name="back_hijau">#00e676</color>
     <color name="red">#ff0000</color>
     <color name="colorSoftGreen">#E5FFF0</color>
+    <color name="design_default_color_on_background">#00000000</color>
 
     <color name="colorPrimary">#45c37b</color>
     <color name="colorPrimaryDark">#2D7E50</color>
