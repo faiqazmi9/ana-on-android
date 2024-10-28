@@ -1,20 +1,27 @@
 package com.example.anaonandroid
 
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.multidex.MultiDexApplication
+import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+@HiltAndroidApp
+class MainActivity : MultiDexApplication() {
+
+    override fun onCreate() {
+        super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            // https://ayusch.com/timber-for-android/
+            Timber.plant(object : Timber.DebugTree() {
+                override fun createStackElementTag(element: StackTraceElement): String {
+                    return String.format(
+                        "#Class:%s, #Method:%s, #Line:%s ->",
+                        super.createStackElementTag(element),
+                        element.methodName,
+                        element.lineNumber
+                    )
+                }
+            })
         }
     }
 }
